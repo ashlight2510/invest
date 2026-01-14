@@ -400,51 +400,94 @@
         text-align: center;
 }
   </style>
+  <style>
+    .lang-switch {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      display: inline-flex;
+      gap: 0;
+      padding: 3px;
+      border-radius: 999px;
+      background: rgba(11, 15, 20, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      border: 1px solid rgba(122, 167, 255, 0.3);
+    }
+    .lang-switch button {
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 44px;
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+    .lang-switch button.active {
+      background: rgba(122, 167, 255, 0.2);
+      color: #7aa7ff;
+      box-shadow: 0 2px 8px rgba(122, 167, 255, 0.4);
+    }
+    .lang-switch button:not(.active):hover {
+      background: rgba(122, 167, 255, 0.1);
+      color: rgba(255, 255, 255, 0.9);
+    }
+  </style>
 </head>
 
   <body>
-    <div class="wrap">
+  <div class="lang-switch" role="tablist" aria-label="Language switcher">
+    <button type="button" data-lang="ko" class="active">KR</button>
+    <button type="button" data-lang="en">EN</button>
+  </div>
+  <div class="wrap">
       <header>
         <div class="brand">
           <div class="logo" aria-hidden="true"></div>
           <div>
-            <h1>투자 확신 빌더</h1>
-            <p class="muted">
+            <h1 data-i18n="title">투자 확신 빌더</h1>
+            <p class="muted" data-i18n="subtitle">
               수익률이 아니라, 판단을 기록해 흔들림을 줄입니다.
             </p>
           </div>
         </div>
         <div class="top-actions">
-          <button class="ghost" id="btnHome">홈</button>
-          <button class="ghost" id="btnDashboard">대시보드</button>
-          <button class="ghost" id="btnChecklist">체크</button>
-          <button class="ghost" id="btnAnchor">선언문</button>
-          <button class="ghost" id="btnOtherService">다른 서비스 보기</button>
+          <button class="ghost" id="btnHome" data-i18n="btnHome">홈</button>
+          <button class="ghost" id="btnDashboard" data-i18n="btnDashboard">대시보드</button>
+          <button class="ghost" id="btnChecklist" data-i18n="btnChecklist">체크</button>
+          <button class="ghost" id="btnAnchor" data-i18n="btnAnchor">선언문</button>
+          <button class="ghost" id="btnOtherService" data-i18n="btnOtherService">다른 서비스 보기</button>
         </div>
       </header>
 
       <!-- SCREEN: HOME -->
       <section id="screen-home" class="screen active">
         <div class="hero">
-          <h2>
+          <h2 data-i18n="heroTitle">
             투자를 잘하자는 게 아닙니다.<br />흔들리지 않게 하려는 겁니다.
           </h2>
-          <p>
+          <p data-i18n="heroDesc">
             여기서는 수익률로 당신을 평가하지 않습니다.<br />
             당신이 “어떤 기준으로 판단했는지”만 기록하고, 그 일관성이 쌓일수록
             확신을 만들어줍니다.
           </p>
           <div class="pillrow">
-            <span class="pill">로그인 없이 시작</span>
-            <span class="pill">기준(원칙) 자동 생성</span>
-            <span class="pill">행동 체크로 확신 누적</span>
-            <span class="pill">모든 데이터는 이 기기(localStorage)에 저장</span>
+            <span class="pill" data-i18n="pill1">로그인 없이 시작</span>
+            <span class="pill" data-i18n="pill2">기준(원칙) 자동 생성</span>
+            <span class="pill" data-i18n="pill3">행동 체크로 확신 누적</span>
+            <span class="pill" data-i18n="pill4">모든 데이터는 이 기기(localStorage)에 저장</span>
           </div>
           <div class="step">
-            <button class="primary" id="btnStart">
+            <button class="primary" id="btnStart" data-i18n="btnStart">
               지금 나의 투자 기준 점검하기 (약 3분)
             </button>
-            <button id="btnResume">이어서 하기</button>
+            <button id="btnResume" data-i18n="btnResume">이어서 하기</button>
           </div>
         </div>
 
@@ -742,6 +785,169 @@
     </div>
 
     <script>
+      // =========================
+      // i18n
+      // =========================
+      const translations = {
+        ko: {
+          metaTitle: "투자 확신 빌더",
+          metaDescription: "수익률을 평가하지 않습니다. 당신의 판단과 기준을 기록해 흔들림을 줄입니다.",
+          title: "투자 확신 빌더",
+          subtitle: "수익률이 아니라, 판단을 기록해 흔들림을 줄입니다.",
+          btnHome: "홈",
+          btnDashboard: "대시보드",
+          btnChecklist: "체크",
+          btnAnchor: "선언문",
+          btnOtherService: "다른 서비스 보기",
+          heroTitle: "투자를 잘하자는 게 아닙니다.<br />흔들리지 않게 하려는 겁니다.",
+          heroDesc: "여기서는 수익률로 당신을 평가하지 않습니다.<br />당신이 \"어떤 기준으로 판단했는지\"만 기록하고, 그 일관성이 쌓일수록 확신을 만들어줍니다.",
+          pill1: "로그인 없이 시작",
+          pill2: "기준(원칙) 자동 생성",
+          pill3: "행동 체크로 확신 누적",
+          pill4: "모든 데이터는 이 기기(localStorage)에 저장",
+          btnStart: "지금 나의 투자 기준 점검하기 (약 3분)",
+          btnResume: "이어서 하기",
+          choiceHint: "가장 가까운 것을 고르세요",
+          btnNext: "다음",
+          btnResult: "결과 만들기",
+          alertNoChoice: "가장 가까운 선택지를 하나 골라주세요.",
+          btnBack: "이전",
+          weak1: "급락/급등 뉴스 직후",
+          weak2: "지루한 횡보장(기준 이탈 유혹)",
+          weak3: "급등 뉴스/테마 자극 구간",
+          weak4: "연속 손실(심리 흔들림 구간)",
+          tone1: "계획형 기회 투자자",
+          tone2: "불안 민감형 (기준이 있으면 강해짐)",
+          tone3: "의욕형 (장중 충동만 막으면 급성장)",
+          tone4: "중립 균형형 (비중 관리로 강해짐)",
+        },
+        en: {
+          metaTitle: "Investment Confidence Builder",
+          metaDescription: "We don't evaluate returns. We record your judgment and criteria to reduce uncertainty.",
+          title: "Investment Confidence Builder",
+          subtitle: "Not about returns, but about recording your judgment to reduce uncertainty.",
+          btnHome: "Home",
+          btnDashboard: "Dashboard",
+          btnChecklist: "Check",
+          btnAnchor: "Declaration",
+          btnOtherService: "View More Services",
+          heroTitle: "It's not about investing well.<br />It's about not being shaken.",
+          heroDesc: "We don't evaluate you by returns here.<br />We only record \"what criteria you judged by\", and as that consistency builds, it creates confidence.",
+          pill1: "Start without login",
+          pill2: "Auto-generate criteria (principles)",
+          pill3: "Accumulate confidence through action checks",
+          pill4: "All data stored on this device (localStorage)",
+          btnStart: "Check my investment criteria now (about 3 min)",
+          btnResume: "Continue",
+          choiceHint: "Choose the closest one",
+          btnNext: "Next",
+          btnResult: "Create Result",
+          alertNoChoice: "Please choose one closest option.",
+          btnBack: "Back",
+          weak1: "Right after sudden drop/surge news",
+          weak2: "Boring sideways market (temptation to deviate from criteria)",
+          weak3: "Surge news/theme stimulation period",
+          weak4: "Consecutive losses (psychological shake period)",
+          tone1: "Planned opportunity investor",
+          tone2: "Anxiety-sensitive type (stronger with criteria)",
+          tone3: "Enthusiastic type (rapid growth if only mid-day impulse is blocked)",
+          tone4: "Neutral balanced type (stronger with position management)",
+        },
+      };
+
+      const defaultLang = "ko";
+      const supportedLangs = ["ko", "en"];
+      let currentLang = defaultLang;
+
+      function t(key, vars = {}) {
+        const langTable = translations[currentLang] || translations.ko;
+        let template = langTable?.[key] ?? translations.ko?.[key] ?? key;
+        if (typeof template !== "string") return template;
+        Object.keys(vars).forEach((k) => {
+          template = template.replace(new RegExp(`\\{${k}\\}`, "g"), vars[k]);
+        });
+        return template;
+      }
+
+      function applyTranslations() {
+        document.title = t("metaTitle");
+        const descMeta = document.querySelector('meta[name="description"]');
+        if (descMeta) descMeta.setAttribute("content", t("metaDescription"));
+        document.documentElement.lang = currentLang;
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          if (el.tagName === "BUTTON" || el.tagName === "H1" || el.tagName === "H2") {
+            if (el.dataset.i18n === "heroTitle" || el.dataset.i18n === "heroDesc") {
+              el.innerHTML = t(el.dataset.i18n);
+            } else {
+              el.textContent = t(el.dataset.i18n);
+            }
+          } else {
+            el.textContent = t(el.dataset.i18n);
+          }
+        });
+        document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+          el.innerHTML = t(el.dataset.i18nHtml);
+        });
+        document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+          el.placeholder = t(el.dataset.i18nPlaceholder);
+        });
+      }
+
+      function detectLang() {
+        const params = new URLSearchParams(window.location.search);
+        const paramLang = params.get("lang");
+        if (supportedLangs.includes(paramLang)) return paramLang;
+        const stored = localStorage.getItem("preferredLang");
+        if (supportedLangs.includes(stored)) return stored;
+        const intlLocale =
+          typeof Intl === "object" && typeof Intl.DateTimeFormat === "function"
+            ? Intl.DateTimeFormat().resolvedOptions().locale
+            : "";
+        const sources = [
+          ...(navigator.languages || []),
+          navigator.language,
+          navigator.userLanguage,
+          intlLocale,
+        ]
+          .filter(Boolean)
+          .map((locale) => locale.toLowerCase());
+        const hasKorean = sources.some((locale) => locale.startsWith("ko"));
+        return hasKorean ? "ko" : "en";
+      }
+
+      function setLang(lang, options = {}) {
+        const nextLang = supportedLangs.includes(lang) ? lang : defaultLang;
+        currentLang = nextLang;
+        window.currentLang = currentLang;
+        document.documentElement.lang = nextLang;
+        localStorage.setItem("preferredLang", nextLang);
+        document.querySelectorAll(".lang-switch button").forEach((button) => {
+          button.classList.toggle("active", button.dataset.lang === nextLang);
+        });
+        applyTranslations();
+        if (options.forceUpdate && typeof window.renderQuestion === "function") {
+          window.renderQuestion();
+        }
+        if (options.updateUrl) {
+          const url = new URL(window.location.href);
+          url.searchParams.set("lang", nextLang);
+          window.history.replaceState({}, "", url);
+        }
+      }
+
+      document.querySelectorAll(".lang-switch button").forEach((button) => {
+        button.addEventListener("click", () => {
+          setLang(button.dataset.lang, { updateUrl: true, forceUpdate: true });
+        });
+      });
+
+      setLang(detectLang(), { updateUrl: false, forceUpdate: false });
+
+      // Make t() function and currentLang globally available
+      window.t = t;
+      window.currentLang = currentLang;
+      window.setLang = setLang;
+
       // -----------------------------
       // Storage helpers
       // -----------------------------
@@ -822,22 +1028,26 @@
       // -----------------------------
       // Diagnosis questions (short but meaningful)
       // -----------------------------
-      const questions = [
+      const QUESTIONS_BASE = [
         {
           id: "dd_react",
           text: "보유 자산이 -12% 하락했을 때, 당신이 실제로 할 가능성이 가장 높은 행동은?",
+          textEn: "When your holdings drop by -12%, what action are you most likely to take?",
           choices: [
-            { label: "전량/대부분 매도", score: { capacity: -2, impulse: +1 } },
+            { label: "전량/대부분 매도", labelEn: "Sell all/most", score: { capacity: -2, impulse: +1 } },
             {
               label: "일부 매도(비중 축소)",
+              labelEn: "Sell some (reduce position)",
               score: { capacity: -1, impulse: 0 },
             },
             {
               label: "관망(아무것도 안 함)",
+              labelEn: "Wait (do nothing)",
               score: { capacity: +1, impulse: -1 },
             },
             {
               label: "추가 매수(분할로)",
+              labelEn: "Buy more (dollar-cost averaging)",
               score: { capacity: +2, impulse: -1 },
             },
           ],
@@ -845,15 +1055,18 @@
         {
           id: "news_influence",
           text: "급등/급락 뉴스를 보면 매매 버튼이 가까워지는 편인가요?",
+          textEn: "When you see sudden surge/drop news, do you feel the urge to trade?",
           choices: [
-            { label: "바로 영향 받는다", score: { capacity: -1, impulse: +2 } },
+            { label: "바로 영향 받는다", labelEn: "Immediately affected", score: { capacity: -1, impulse: +2 } },
             {
               label: "영향은 받지만 참는다",
+              labelEn: "Affected but resist",
               score: { capacity: 0, impulse: +1 },
             },
-            { label: "대부분 무시한다", score: { capacity: +1, impulse: -1 } },
+            { label: "대부분 무시한다", labelEn: "Mostly ignore", score: { capacity: +1, impulse: -1 } },
             {
               label: "뉴스는 기준 확인용",
+              labelEn: "News is for checking criteria",
               score: { capacity: +1, impulse: -2 },
             },
           ],
@@ -861,21 +1074,26 @@
         {
           id: "hold_period",
           text: "평균 보유 기간은 어느 쪽에 가깝나요?",
+          textEn: "What is your average holding period closest to?",
           choices: [
             {
               label: "수일~수주(짧게)",
+              labelEn: "Days to weeks (short)",
               score: { strategy: "swing", capacity: 0, impulse: +1 },
             },
             {
               label: "1~3개월",
+              labelEn: "1-3 months",
               score: { strategy: "mix", capacity: 0, impulse: 0 },
             },
             {
               label: "6개월~1년",
+              labelEn: "6 months to 1 year",
               score: { strategy: "long", capacity: +1, impulse: -1 },
             },
             {
               label: "1년 이상",
+              labelEn: "1 year or more",
               score: { strategy: "long", capacity: +2, impulse: -1 },
             },
           ],
@@ -883,12 +1101,14 @@
         {
           id: "plan_first",
           text: "매수할 때 가장 먼저 보는 것은?",
+          textEn: "What do you check first when buying?",
           choices: [
-            { label: "가격/차트", score: { impulse: +1, capacity: 0 } },
-            { label: "뉴스/테마", score: { impulse: +2, capacity: -1 } },
-            { label: "비중/리스크", score: { impulse: -1, capacity: +1 } },
+            { label: "가격/차트", labelEn: "Price/chart", score: { impulse: +1, capacity: 0 } },
+            { label: "뉴스/테마", labelEn: "News/theme", score: { impulse: +2, capacity: -1 } },
+            { label: "비중/리스크", labelEn: "Position size/risk", score: { impulse: -1, capacity: +1 } },
             {
               label: "기준(원칙)부터 확인",
+              labelEn: "Check criteria (principles) first",
               score: { impulse: -2, capacity: +2 },
             },
           ],
@@ -896,15 +1116,18 @@
         {
           id: "sleep_loss",
           text: "손실이 3개월 연속이면 심리 상태는?",
+          textEn: "If losses continue for 3 months, what is your mental state?",
           choices: [
-            { label: "잠이 흔들린다", score: { capacity: -2, impulse: +1 } },
+            { label: "잠이 흔들린다", labelEn: "Sleep is disturbed", score: { capacity: -2, impulse: +1 } },
             {
               label: "신경 쓰이지만 유지",
+              labelEn: "Bothered but maintain",
               score: { capacity: -1, impulse: 0 },
             },
-            { label: "생각보다 괜찮다", score: { capacity: +1, impulse: -1 } },
+            { label: "생각보다 괜찮다", labelEn: "Better than expected", score: { capacity: +1, impulse: -1 } },
             {
               label: "오히려 계획대로 기회",
+              labelEn: "Rather an opportunity as planned",
               score: { capacity: +2, impulse: -1 },
             },
           ],
@@ -920,6 +1143,7 @@
       const qMeta = document.getElementById("qMeta");
 
       function renderQuestion() {
+        const questions = getQuestions();
         const total = questions.length;
         const q = questions[qIndex];
         qText.textContent = q.text;
@@ -931,9 +1155,10 @@
           const btn = document.createElement("button");
           btn.className = "choice";
           const picked = answers[q.id] === i;
+          const t = window.t || ((key, vars = {}) => key);
           btn.innerHTML = `${picked ? "✅ " : ""}${
             c.label
-          }<small>가장 가까운 것을 고르세요</small>`;
+          }<small>${t("choiceHint")}</small>`;
           btn.onclick = () => {
             answers[q.id] = i;
             saveProfileAnswers();
@@ -942,9 +1167,10 @@
           choicesEl.appendChild(btn);
         });
 
+        const t = window.t || ((key, vars = {}) => key);
         document.getElementById("btnBackQ").disabled = qIndex === 0;
         document.getElementById("btnNextQ").textContent =
-          qIndex === total - 1 ? "결과 만들기" : "다음";
+          qIndex === total - 1 ? t("btnResult") : t("btnNext");
       }
 
       function saveProfileAnswers() {
@@ -954,6 +1180,7 @@
       }
 
       function computeProfile() {
+        const questions = getQuestions();
         // aggregate
         let capacity = 0;
         let impulse = 0;
@@ -1041,10 +1268,12 @@
       };
 
       document.getElementById("btnNextQ").onclick = () => {
+        const t = window.t || ((key, vars = {}) => key);
+        const questions = getQuestions();
         // ensure current question answered
         const q = questions[qIndex];
         if (answers[q.id] === undefined) {
-          alert("가장 가까운 선택지를 하나 골라주세요.");
+          alert(t("alertNoChoice"));
           return;
         }
         if (qIndex < questions.length - 1) {
