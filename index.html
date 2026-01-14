@@ -1212,21 +1212,22 @@
         // 8% ~ 28%
         let maxDD = clamp(Math.round(8 + capNorm * 0.2 - impNorm * 0.1), 8, 28);
 
+        const t = window.t || ((key, vars = {}) => key);
         // weak spot label
-        let weak = "급락/급등 뉴스 직후";
-        if (impNorm < 40) weak = "지루한 횡보장(기준 이탈 유혹)";
-        if (impNorm >= 40 && impNorm < 70) weak = "급등 뉴스/테마 자극 구간";
-        if (impNorm >= 70) weak = "연속 손실(심리 흔들림 구간)";
+        let weak = t("weak1");
+        if (impNorm < 40) weak = t("weak2");
+        if (impNorm >= 40 && impNorm < 70) weak = t("weak3");
+        if (impNorm >= 70) weak = t("weak4");
 
         // generate a gentle but confident summary
         const tone =
           capNorm >= 65 && impNorm <= 45
-            ? "계획형 기회 투자자"
+            ? t("tone1")
             : capNorm <= 45 && impNorm >= 60
-            ? "불안 민감형 (기준이 있으면 강해짐)"
+            ? t("tone2")
             : capNorm >= 55 && impNorm >= 60
-            ? "의욕형 (장중 충동만 막으면 급성장)"
-            : "중립 균형형 (비중 관리로 강해짐)";
+            ? t("tone3")
+            : t("tone4");
 
         const profile = {
           updatedAt: Date.now(),
